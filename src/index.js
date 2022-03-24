@@ -1,10 +1,7 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
+import React from "react";
+import ReactDOM from "react-dom";
 
-const element = (
-  <div>
-    <input type="text" /> + <input type="text" /> = <span>0</span>
-  </div>
-);
-ReactDOM.render(element, document.getElementById('root'));
+import App from "./App";
+
+const rootElement = document.getElementById("root");
+ReactDOM.render(<App />, rootElement);

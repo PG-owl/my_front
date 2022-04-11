@@ -39,12 +39,12 @@ function TodoList() {
 
   // タスク削除機能
   const handleRemoveTask = (id) => {
-    axios.delete('http://localhost:3001/api/v1/posts/${id}')
+    axios.delete(`http://localhost:3001/api/v1/posts/${id}`)
     .then(res => {
-      console.log(res.data)
       setTodos(todos.filter(todo => todo.id !== id))
+      console.log("set")
     })
-    .catch(error => {console.log(error)
+    .catch(data => {console.log(data)
     })
   };
   

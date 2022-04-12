@@ -42,27 +42,28 @@ function TodoList() {
     axios.delete(`http://localhost:3001/api/v1/posts/${id}`)
     .then(res => {
       setTodos(todos.filter(todo => todo.id !== id))
-      console.log("set")
+      console.log("delete")
     })
     .catch(data => {console.log(data)
     })
   };
   
-  // タスク更新機能
-  const handleUpdateTask = id => {
-    const newTodos = todos.map((todo,todoId) => {
-      if(todoId  === id){
-          todo.isCompleted = !todo.isCompleted
+  // 達成状況 更新機能
+  const handleUpdateTask = (id) => {
+    axios.patch(`http://localhost:3001/api/v1/posts/${id}`,
+      {
+        isCompleted: !isCompleted
       }
-      return todo;
-    });
-
-    axios.patch('http://localhost:3001/api/v1/posts/${id}',
-      { }
-    ).then(response => {
-      console.log("registration response", response.data)
-      setTodos({newTodos})
-    })
+    ).then(res => {
+      let newTodos = todos.map(todo => {
+        if(todo.id === res.data.id){
+          return res.data;
+        }else{
+          return todo;
+        }
+      })
+      setTodos(newTodos)
+    }).catch(error => console.log(error))
   };
 
   return (
@@ -93,11 +94,10 @@ function TodoList() {
             component='li'
             style={ todo.isCompleted === true ? {textDecorationLine: 'line-through'}:{}}
           >
-            <input  type="checkbox"
-                    onClick={ () => handleUpdateTask(todo.id)}
-            />
+            <input type="checkbox"
+                   onClick={ () => handleUpdateTask(todo.id) } />
             {todo.task}
-            <button onClick={ () => handleRemoveTask(todo.id) }> × </button>
+            <button onClick={ () => handleRemoveTask(todo.id) }> x </button>
           </li>
         ))}
       </ul>

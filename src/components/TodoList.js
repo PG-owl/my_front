@@ -3,10 +3,24 @@ import axios from "axios";
 
 import "./TodoList.scss";
 
+import Box from "@mui/material/Box";
+import Container from '@mui/material/Container';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+// import Typography from "@mui/material/Typography";
+import IconButton from '@mui/material/IconButton';
+import Button from "@mui/material/Button";
+import TextField from '@mui/material/TextField';
+import DeleteIcon from '@mui/icons-material/Delete';
+import CheckBoxIcon from '@mui/icons-material/CheckBox';
+import Grid from '@mui/material/Grid';
+// import Divider from '@mui/material/Divider';
+
 function TodoList() {
   const [todos, setTodos] = useState([]);
   const [task, setTask] = useState("");
-  const [updateTask, setUpdateTask] = useState("");
+  //実装中
+  // const [updateTask, setUpdateTask] = useState("");
 
   // タスク表示機能
   useEffect(() => {
@@ -49,6 +63,7 @@ function TodoList() {
     })
   };
 
+  //実装中
   // const updateTask = (id) => {
   //   if (updatetask === "") return;
   //   axios.pathe(`http://localhost:3001/api/v1/posts/${id}`,
@@ -83,63 +98,70 @@ function TodoList() {
   };
 
   return (
-    <div className="todo-list">
-
-      <div className="todo-list__title">
-        <h1>ToDo List</h1>
-      </div>
-      
-      <div className="todo-list__form">
+    <Box className="todo-list" flexItem="bool">
+    <Container maxWidth="sm">    
+      <Box className="todo-list__form" sx={{ m: "2rem" }}>
         <form onSubmit={ handleSubmit }>
-          <input
-            type="text"
-            value={task}
-            placeholder="Add New Task"
-            onChange={ handleNewTask }
-          />
-          : 
-          <button
-            type="submit"
-            variant='contained'
-            color='primary'
-          >
-            Add Task
-          </button>  
+        <Box sx={{ flexGrow: 1 }}>
+          <Grid container spacing={2}>
+            <Grid item xs={8}>
+              <TextField
+                width='100%'
+                variant="filled"
+                label="Add New Task"
+                size="small"
+                value={task}
+                onChange={ handleNewTask }
+              /> 
+            </Grid>
+            <Grid item xs={4}>
+              <Button variant="contained" size="normal">Add Task</Button>
+            </Grid>
+          </Grid>
+        </Box>
         </form>
-      </div>
+      </Box>
+    </Container>
 
-      <div className="todo-list__tasks">
-        <ul>
+    <List sx={{maxWidth: "100%", bgcolor: 'background.paper'  }}>
+      <Box className="todo-list__tasks" sx={{ m: "2rem" }}>
           {todos.map((todo) => (
-            <li 
+            <ListItem 
               key={todo.id}
               component='li'
               style={ todo.isCompleted === true ? {textDecorationLine: 'line-through'}:{}}
             >
-              {todo.task}
-              <button onClick={ () => handleRemoveTask(todo.id) }> x </button>
-              <button value="task" onClick={ () => handleUpdateTask(todo.id) }> ○ </button>
-
-              {/* <form>
-                <input
-                  type="text"
-                  name="issue"
-                  value={updatetask} 
-                  onChange={e => handleUpdate(e)}
-                />
-                <button
-                  type="submit"
-                  onClick={() => updateTask(todo.id)}
-                >
-                  更新
-                </button>
-              </form> */}
-            </li>
+              <Box sx={{ flexGrow: 1 }}>
+                <Grid container spacing={0}>
+                  <Grid item xs={8} direction="column" alignItems="center">
+                    {todo.task}
+                  </Grid>
+                  <Grid item xs={2}> </Grid>
+                  <Grid item xs={1}>
+                    <IconButton
+                      variant="outlined"
+                      size="small"
+                      onClick={() => handleUpdateTask(todo.id)}
+                    >
+                      <CheckBoxIcon />
+                    </IconButton>
+                  </Grid>
+                  <Grid item xs={1}>
+                    <IconButton
+                      variant="outlined"
+                      size="small"
+                      onClick={() => handleRemoveTask(todo.id)}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </Grid>
+                </Grid>
+              </Box>
+            </ListItem>
           ))}
-        </ul>
-      </div>
-
-    </div>
+      </Box>
+    </List>  
+    </Box>
   );
 }
 

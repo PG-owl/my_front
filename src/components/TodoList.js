@@ -35,7 +35,7 @@ function TodoList() {
   };
 
   // タスク追加機能
-  const handleSubmit = () => {
+  const handleSubmit = (event) => {
     if (task === "") return;
     axios.post('http://localhost:3001/api/v1/posts', {
       task: task
@@ -50,6 +50,7 @@ function TodoList() {
     .catch(error => {console.log(error)
     })
     task.preventDefault();
+    event.preventDefault();
   };
 
   // タスク削除機能
@@ -115,7 +116,7 @@ function TodoList() {
               /> 
             </Grid>
             <Grid item xs={4}>
-              <Button variant="contained" size="normal">Add Task</Button>
+              <Button type="submit" variant="contained" size="normal">Add Task</Button>
             </Grid>
           </Grid>
         </Box>

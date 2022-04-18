@@ -35,7 +35,7 @@ function TodoList() {
   };
 
   // タスク追加機能
-  const handleSubmit = (event) => {
+  const handleSubmit = (e) => {
     if (task === "") return;
     axios.post('http://localhost:3001/api/v1/posts', {
       task: task
@@ -50,7 +50,7 @@ function TodoList() {
     .catch(error => {console.log(error)
     })
     task.preventDefault();
-    event.preventDefault();
+    e.preventDefault();
   };
 
   // タスク削除機能
